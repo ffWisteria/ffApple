@@ -1,5 +1,7 @@
 package controller.session;
 
+//ログインページに飛ぶ
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

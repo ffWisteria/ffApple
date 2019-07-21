@@ -7,6 +7,11 @@
     <title>Sample</title>
 </head>
 <body>
-sample
+
+    <form method="get" action="/home">
+        <input name="answer" value="回答を送信する">
+    </form>
+
+
 </body>
 </html>

@@ -7,6 +7,16 @@
     <title>Sample</title>
 </head>
 <body>
-sample
+
+
+    <form method="get" action="answers/new">
+        <input name="answer" value="回答する">
+    </form>
+
+    <form method="get" action="questionnaires">
+        <input name="get_answer" value="アンケート結果閲覧">
+    </form>
+
+
 </body>
 </html>
