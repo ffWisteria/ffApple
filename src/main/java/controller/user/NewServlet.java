@@ -21,20 +21,29 @@ public class NewServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        int flag = 0;
 
-        //userインスタンスの作成
-        User user = new User(
-                null,
-                name,
-                email,
-                password
-        );
+        if(name.length() > 64){flag = 1;}
+        if(email.length() > 128){flag = 1;}
+        if(password.length() > 64){flag = 1;}
 
-        user.createUser();
+        if(flag == 1){
+            response.sendRedirect("/error");
+        }else {
+            //userインスタンスの作成
+            User user = new User(
+                    null,
+                    name,
+                    email,
+                    password
+            );
 
-        request.setAttribute("user",user);
+            user.createUser();
 
-        response.sendRedirect("/sessions/new");
+            request.setAttribute("user", user);
+
+            response.sendRedirect("/sessions/new");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

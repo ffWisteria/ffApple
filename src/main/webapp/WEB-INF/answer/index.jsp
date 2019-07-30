@@ -14,7 +14,7 @@
         <h3>問題番号<c:out value="${question.getNumber()}"/>
             &nbsp;＜質問＞<c:out value="${question.getContent()}"/></h3><br>
         <c:forEach var="answer" items="${answers}">
-            ５段階評価：&nbsp;&nbsp;<c:out value=" ${answer.getEvaluation()}"/>
+            ５段階評価：<c:out value=" ${answer.getEvaluation()}"/>&nbsp;&nbsp;
             理由：<c:out value=" ${answer.getComment()}"/><br><br>
         </c:forEach>
     </c:forEach>

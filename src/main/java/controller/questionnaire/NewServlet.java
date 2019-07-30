@@ -20,32 +20,45 @@ public class NewServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String[] contents = request.getParameterValues("content");
+        int flag = 0;
 
-        ArrayList<Question> questions = new ArrayList<>();
-        for (int i = 0; i < contents.length; i++) {
-            Question question = new Question(
-                    null,
-                    i+1,
-                    contents[i],
-                    null,
-                    null
-            );
-            //questionsというリストにデータを追加する
-            questions.add(question);
+        for(int j=0; j < contents.length; j++){
+            if(contents[j].length()> 45){
+                flag = 1;
+            }
         }
+        if (name.length() > 45 ) {
+            flag = 1;
+        }
+        if(flag == 1){
+            response.sendRedirect("/error");
+        } else {
 
-        Questionnaire questionnaire = new Questionnaire(
-                null,
-                name,
-                User.getCurrentUser(request).getId(),
-                questions
-        );
+            ArrayList<Question> questions = new ArrayList<>();
+            for (int i = 0; i < contents.length; i++) {
+                Question question = new Question(
+                        null,
+                        i + 1,
+                        contents[i],
+                        null,
+                        null
+                );
+                //questionsというリストにデータを追加する
+                questions.add(question);
+            }
 
-        questionnaire.createQuestionnaire();
+            Questionnaire questionnaire = new Questionnaire(
+                    null,
+                    name,
+                    User.getCurrentUser(request).getId(),
+                    questions
+            );
 
-        response.sendRedirect("/home");
+            questionnaire.createQuestionnaire();
+
+            response.sendRedirect("/home");
+        }
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
