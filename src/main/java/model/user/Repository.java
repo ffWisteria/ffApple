@@ -28,9 +28,9 @@ public class Repository extends Client {
             // sql文を入力されてしまった時にデータが消えてしまうかもしれないから
             // 実行するSQL文とパラメータを指定する
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, user.name);//?1
-            preparedStatement.setString(2, user.email);//?2
-            preparedStatement.setString(3, user.password);//?3
+            preparedStatement.setString(1, user.getName());//?1
+            preparedStatement.setString(2, user.getEmail());//?2
+            preparedStatement.setString(3, user.getPassword());//?3
             // SQL 文の実行
             preparedStatement.executeUpdate();
             return;
@@ -117,6 +117,67 @@ public class Repository extends Client {
             e.printStackTrace();
             return null;
 
+        } finally {
+            close(connection, preparedStatement, resultSet);
+        }
+    }
+
+
+    public static User selectUserByEMail(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            String sql = "select * from users where email = ?";
+
+            connection = createConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+
+            resultSet = preparedStatement.executeQuery();
+
+            User user = null;
+            while (resultSet.next()) {
+                user = new User(
+                        String.valueOf(resultSet.getString("id")),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password")
+                );
+            }
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            close(connection, preparedStatement, resultSet);
+        }
+    }
+
+    public static void updateUser(User user){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            String sql = "update users set name = ?, email = ?,password = ? where id = ?";
+
+            connection = createConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3,user.getPassword());
+            preparedStatement.setInt(4,Integer.parseInt(user.getId()));
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             close(connection, preparedStatement, resultSet);
         }

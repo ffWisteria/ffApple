@@ -2,14 +2,17 @@ package model.user;
 
 import model.Default;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class User extends Default {
-    public String name;
-    public String email;
-    public String password;
+    public final static String currentUserKey="currentUser";
+    private String name;
+    private String email;
+    private String password;
 
     public User(
             String id,
@@ -22,6 +25,18 @@ public class User extends Default {
         this.name=name;
         this.email=email;
         this.password=password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {
@@ -78,5 +93,37 @@ public class User extends Default {
             stringBuffer.append(Integer.toHexString(bytes[i] & 0x0f));
         }
         return stringBuffer.toString();
+    }
+
+    public boolean authenticateUser(HttpServletRequest request) {
+        User persistedUser = Repository.selectUserByEMail(this.email);
+        if (persistedUser == null) {
+            return false;
+        }
+
+        this.hashPassword();
+        if (this.password.equals(persistedUser.password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute(currentUserKey, persistedUser);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static User getCurrentUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (User) session.getAttribute(currentUserKey);
+    }
+
+    public static void logoutUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute(currentUserKey);
+    }
+
+    public void updateUser(){
+        this.hashPassword();
+        Repository.updateUser(this);
     }
 }

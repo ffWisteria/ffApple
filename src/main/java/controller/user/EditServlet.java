@@ -1,7 +1,5 @@
 package controller.user;
 
-//ユーザ登録
-
 import model.user.User;
 
 import javax.servlet.RequestDispatcher;
@@ -12,33 +10,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/users/new")
-public class NewServlet extends HttpServlet {
+@WebServlet("/users/edit")
+public class EditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // リクエストパラメータの取得
+        User user = User.getCurrentUser(request);
+
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        //userインスタンスの作成
-        User user = new User(
-                null,
-                name,
-                email,
-                password
-        );
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
 
-        user.createUser();
+        user.updateUser();
 
-        request.setAttribute("user",user);
-
-        response.sendRedirect("/sessions/new");
+        response.sendRedirect("/home");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/edit.jsp");
         dispatcher.forward(request, response);
     }
 }
