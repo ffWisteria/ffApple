@@ -10,6 +10,14 @@ public class Question extends Default {
     private String questionnaireID;
     private ArrayList<Answer> answers;
 
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<Answer> answers) {
+        this.answers = answers;
+    }
+
     public Question(
         String id,
         int number,

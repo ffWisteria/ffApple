@@ -7,7 +7,6 @@
 </head>
 <body>
 <h3>データの入力に失敗しました。</h3>
-<a href="/home">マイページに戻る</a>
-<a href="/questionnaires/new">アンケート作成画面に戻る</a>
+<a href="/users/new">新規アカウント登録画面に戻る</a>
 </body>
 </html>

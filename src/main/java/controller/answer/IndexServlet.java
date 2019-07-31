@@ -22,15 +22,13 @@ public class IndexServlet extends HttpServlet {
         String questionnaireID = request.getParameter("id");
 
         ArrayList<Question> questions = Question.selectQuestionsByQuestionnaireID(questionnaireID);
-        ArrayList<Answer> answers = new ArrayList();
+
         for(int i = 0; i < questions.size(); i++){
             String questionID = questions.get(i).getId();
-            answers = Answer.selectAnsｗersByQuestionID(questionID);
-            System.out.println(answers);
+            questions.get(i).setAnswers(Answer.selectAnsｗersByQuestionID(questionID));
         }
 
         request.setAttribute("questions",questions);
-        request.setAttribute("answers",answers);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/answer/index.jsp");
         dispatcher.forward(request, response);

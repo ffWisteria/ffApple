@@ -14,7 +14,7 @@
             <c:out value="${question.getContent()}"/><br>
             <input type="radio" name="evaluation_${question.getNumber()}" value="5">5
             <input type="radio" name="evaluation_${question.getNumber()}" value="4">4
-            <input type="radio" name="evaluation_${question.getNumber()}" value="3">3
+            <input type="radio" name="evaluation_${question.getNumber()}" value="3" checked="checked">3
             <input type="radio" name="evaluation_${question.getNumber()}" value="2">2
             <input type="radio" name="evaluation_${question.getNumber()}" value="1">1
             <br>

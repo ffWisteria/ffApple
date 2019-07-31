@@ -13,7 +13,7 @@
     <c:forEach var="question" items="${questions}">
         <h3>問題番号<c:out value="${question.getNumber()}"/>
             &nbsp;＜質問＞<c:out value="${question.getContent()}"/></h3><br>
-        <c:forEach var="answer" items="${answers}">
+        <c:forEach var="answer" items="${question.answers}">
             ５段階評価：<c:out value=" ${answer.getEvaluation()}"/>&nbsp;&nbsp;
             理由：<c:out value=" ${answer.getComment()}"/><br><br>
         </c:forEach>

@@ -51,6 +51,14 @@ public class AuthenticateFilter implements Filter {
                 chain.doFilter(req, resp);
             }
         }
+        //エラー画面にアクセスした時
+        else if (servletPath.equals("/newError")){
+            if(currentUser == null){
+                chain.doFilter(req,resp);
+            }else{
+                httpServletResponse.sendRedirect("/users/new");
+            }
+        }
         // ログインしないとダメな画面にアクセスしたとき
         else {
             if (currentUser == null) {

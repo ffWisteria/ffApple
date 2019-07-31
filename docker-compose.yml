@@ -18,6 +18,7 @@ services:
       context: ./containers/db
     restart: always
     environment:
+      TZ: "Asia/Tokyo"
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: root
     volumes:

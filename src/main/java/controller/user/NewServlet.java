@@ -26,11 +26,15 @@ public class NewServlet extends HttpServlet {
         if(name.length() > 64){flag = 1;}
         if(email.length() > 128){flag = 1;}
         if(password.length() > 64){flag = 1;}
+         User oldUser = User.selectUserByEmail(email);
+         if(oldUser != null){flag = 1;}
 
         if(flag == 1){
-            response.sendRedirect("/error");
-        }else {
+            System.out.println(flag);
+            response.sendRedirect("/newError");
+        } else {
             //userインスタンスの作成
+            System.out.println("きてはだめ");
             User user = new User(
                     null,
                     name,

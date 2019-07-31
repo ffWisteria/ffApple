@@ -126,4 +126,8 @@ public class User extends Default {
         this.hashPassword();
         Repository.updateUser(this);
     }
+
+    public static User selectUserByEmail(String Email){
+        return Repository.selectUserByEMail(Email);
+    }
 }
